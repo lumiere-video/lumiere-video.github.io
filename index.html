@@ -21,7 +21,7 @@
   <meta property="og:url" content="https://lumiere-video.github.io" />
   <meta property="og:title" content="Lumiere - Google Research" />
   <meta property="og:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/lumiere-video/lumiere-video.github.io/main/images/lumiere_frame_poster.jpg" />
+  <meta property="og:image" content="https://inbar-mosseri.github.io/images/lumiere.gif" />
 
   <meta property="og:type" content="video">
   <meta property="og:video" content="https://www.youtube.com/embed/wxLr02Dz2Sc">
@@ -30,12 +30,24 @@
 
 
 
-  <meta name="twitter:card" content="player" />
+  <!-- <meta property="twitter:card" content="summary" /> -->
+  <meta property="twitter:site" content="GoogleAI" />
+  <meta property="twitter:title" content="Lumiere - Google Research" />
+  <meta property="twitter:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
+  <meta property="twitter:image" content="https://inbar-mosseri.github.io/images/lumiere.gif" />  
+  
+  <!-- <meta name="twitter:card" content="summary" /> -->
   <meta name="twitter:site" content="GoogleAI" />
   <meta name="twitter:title" content="Lumiere - Google Research" />
   <meta name="twitter:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/lumiere-video/lumiere-video.github.io/main/images/lumiere_frame_poster.jpg" />  
+  <meta name="twitter:image" content="https://inbar-mosseri.github.io/images/lumiere.gif" />  
+  
+  <meta property="twitter:card" content="player" />
+  <meta property="twitter:player" content="https://www.youtube.com/embed/wxLr02Dz2Sc">
+  <meta property="twitter:player:width" content="1280">
+  <meta property="twitter:player:height" content="720">
 
+  <meta name="twitter:card" content="summary" />
   <meta name="twitter:player" content="https://www.youtube.com/embed/wxLr02Dz2Sc">
   <meta name="twitter:player:width" content="1280">
   <meta name="twitter:player:height" content="720">
@@ -98,7 +110,7 @@
   </div>
   <section class="hero-heading-left" style="padding-top: 50px;">
     <div class="container-2">
-      <div class="hero-wrapper">
+      <div class="hero-wrapper" style="padding-bottom: 0px;">
         <div class="hero-split">
           <p class="paragraph" style="font-size: 24px;">Google Research</p>
           <h1 class="heading-5">LUMIERE</h1>
@@ -115,9 +127,6 @@
           <iframe src="https://www.youtube.com/embed/wxLr02Dz2Sc?rel=0&amp;controls=1&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="pointer-events:auto" allow="autoplay; encrypted-media" donotallowfullscreen title="Lumiere"></iframe>
         </div>
       </div>
-      <!-- <div style="padding-top:56.17021276595745%;" class="w-embed-youtubevideo youtube">
-        <iframe src="https://www.youtube.com/embed/wxLr02Dz2Sc?rel=0&amp;controls=1&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="position:absolute; top:0%; left:0%; height:100%; width:100%; pointer-events:auto" allow="autoplay; encrypted-media" donotallowfullscreen title="Lumiere"></iframe>
-      </div> -->
     </div>
   </section>
   <section id="section_text_to_video" class="sectiongrey">
@@ -429,7 +438,7 @@
                 <div class="div-block-6">
                   <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/teddy_snow.webm" type="video/webm"><source data-src="videos/image-to-video/teddy_snow.mp4" type="video/mp4"></video>
                   <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0b4" class="teddybear_snow_i2v">
-                    <div class="im2vidcaption">A teddybear dancing in the snow skeleton<br></div>
+                    <div class="im2vidcaption">A teddybear dancing in the snow<br></div>
                   </div>
                 </div>
               </div>
@@ -657,7 +666,7 @@
                 <div class="div-block-6">
                   <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/starry_night.webm" type="video/webm"><source data-src="videos/image-to-video/starry_night.mp4" type="video/mp4"></video>
                   <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb180" class="starry_night_i2v">
-                    <div class="im2vidcaption">A timelapse oil painting of a starry night with cloud moving<br></div>
+                    <div class="im2vidcaption">A timelapse oil painting of a starry night with clouds moving<br></div>
                   </div>
                 </div>
               </div>
@@ -665,7 +674,7 @@
                 <div class="div-block-6">
                   <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/big_wave.webm" type="video/webm"><source data-src="videos/image-to-video/big_wave.mp4" type="video/mp4"></video>
                   <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb187" class="the_great_wave_i2v">
-                    <div class="im2vidcaption">a big ocean wave<br></div>
+                    <div class="im2vidcaption">A big ocean wave<br></div>
                   </div>
                 </div>
               </div>
@@ -1275,7 +1284,7 @@
           <h1 class="heading-7">Introduction</h1>
         </div>
         <div id="w-node-_62bafe6a-ab20-520c-6977-1808abd5ef19-47edbc52" class="w-layout-cell">
-          <p class="paragraph-2">We introduce Lumiere -- a text-to-video diffusion model designed for synthesizing videos that portray realistic, diverse and coherent motion -- a pivotal challenge in video synthesis. To this end, we introduce a model architecture that generates the entire duration of the video in one pass, followed by a spatial-only super-resolution model. Our model is based on a space-time U-Net architecture that incorporates both spatial and (importantly) temporal down- and up-sampling, and leverages a pre-trained text-to-image diffusion model. As opposed to existing methods which synthesize distant keyframes followed by temporal super-resolution, our model learns to directly generate a full-frame-rate, low resolution video by processing it in multiple space-time scales. We demonstrate state-of-the-art text-to-video generation results, as well as a range of creative applications that are easily facilitated by our design, including image-to-video, video inpainting, and stylized generation.</p>
+          <p class="paragraph-2">We introduce Lumiere -- a text-to-video diffusion model designed for synthesizing videos that portray realistic, diverse and coherent motion -- a pivotal challenge in video synthesis. To this end, we introduce a Space-Time U-Net architecture that generates the entire temporal duration of the video at once, through a single pass in the model. This is in contrast to existing video models which synthesize distant keyframes followed by temporal super-resolution -- an approach that inherently makes global temporal consistency difficult to achieve. By deploying both spatial and (importantly) temporal down- and up-sampling and leveraging a pre-trained text-to-image diffusion model, our model learns to directly generate a full-frame-rate, low-resolution video by processing it in multiple space-time scales. We demonstrate state-of-the-art text-to-video generation results, and show that our design easily facilitates a wide range of content creation tasks and video editing applications, including image-to-video, video inpainting, and stylized generation.</p>
           <div class="div-block-14"><img src="images/architecture.png" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/architecture-p-500.png 500w, images/architecture-p-800.png 800w, images/architecture-p-1080.png 1080w, images/architecture-p-1600.png 1600w, images/architecture-p-2000.png 2000w, images/architecture-p-2600.png 2600w, images/architecture-p-3200.png 3200w, images/architecture.png 5487w" alt=""></div>
         </div>
       </div>
@@ -1614,7 +1623,7 @@
         <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe942-47edbc52" class="w-layout-cell cellwithtextedit">
           <div class="textblockstyleprompt">&quot;wearing a bath robe&quot;</div>
           <div class="div-block-6">
-            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/chick_bath_robe.webm" type="video/webm"><source data-src="videos/editing/chick_bath_robechi.mp4" type="video/mp4"></video>
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/chick_bath_robe.webm" type="video/webm"><source data-src="videos/editing/chick_bath_robe.mp4" type="video/mp4"></video>
           </div>
         </div>
         <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe947-47edbc52" class="w-layout-cell cellwithtextedit">
