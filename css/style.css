@@ -518,7 +518,7 @@
   opacity: 0;
   -webkit-text-fill-color: inherit;
   background-color: rgba(0, 0, 0, 0);
-  background-image: url('../images/pharaoh.png');
+  background-image: url('../images/pharaoh.jpg');
   background-position: 50%;
   background-size: cover;
   background-clip: border-box;
@@ -528,14 +528,14 @@
 
 .div-block-8 {
   background-color: rgba(0, 0, 0, 0);
-  background-image: url('../images/sad_cat_first_frame2.png');
+  background-image: url('../images/sad_cat_first_frame2.jpg');
   background-position: 0 0;
   background-size: 512px;
 }
 
 .div-block-9 {
   pointer-events: auto;
-  background-image: url('../images/sad_cat_first_frame2.png');
+  background-image: url('../images/sad_cat_first_frame2.jpg');
   background-position: 0 0;
   background-size: auto;
   display: flex;
@@ -545,7 +545,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/snowflake_i2v.png');
+  background-image: url('../images/snowflake_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -555,7 +555,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/musk_first_frame.png');
+  background-image: url('../images/musk_first_frame.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -642,7 +642,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/snow_i2v.png');
+  background-image: url('../images/snow_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -652,7 +652,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/cat_piano_i2v.png');
+  background-image: url('../images/cat_piano_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -662,7 +662,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/sad_cat_i2v.png');
+  background-image: url('../images/sad_cat_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -672,7 +672,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/skeleton_i2v.png');
+  background-image: url('../images/skeleton_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -682,7 +682,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/bee_i2v.png');
+  background-image: url('../images/bee_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -692,7 +692,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/bigfoot_i2v_1.png');
+  background-image: url('../images/bigfoot_i2v_1.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -702,7 +702,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/giraffe_i2v_1.png');
+  background-image: url('../images/giraffe_i2v_1.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -713,7 +713,7 @@
   height: 100%;
   opacity: 0;
   color: rgba(0, 0, 0, 0);
-  background-image: url('../images/sailboat_i2v.png');
+  background-image: url('../images/sailboat_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   order: 0;
@@ -724,7 +724,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/panda_car_i2v.png');
+  background-image: url('../images/panda_car_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -734,7 +734,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/elephant_i2v.png');
+  background-image: url('../images/elephant_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -744,7 +744,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/icecream_i2v.png');
+  background-image: url('../images/icecream_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -754,7 +754,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/teddybear_skate_i2v.png');
+  background-image: url('../images/teddybear_skate_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -764,7 +764,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/sloth_i2v.png');
+  background-image: url('../images/sloth_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -774,7 +774,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/teddybear_snow_i2v.png');
+  background-image: url('../images/teddybear_snow_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -784,7 +784,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/turtle_i2v.png');
+  background-image: url('../images/turtle_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -794,7 +794,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/ship_i2v.png');
+  background-image: url('../images/ship_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -804,7 +804,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/panda_popcorn_i2v.png');
+  background-image: url('../images/panda_popcorn_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -815,7 +815,7 @@
   height: 100%;
   opacity: 0;
   object-fit: fill;
-  background-image: url('../images/monkey_coffee_i2v.png');
+  background-image: url('../images/monkey_coffee_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -825,7 +825,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/bonefire_i2v.png');
+  background-image: url('../images/bonefire_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -835,7 +835,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/teddybear_nyc_i2v.png');
+  background-image: url('../images/teddybear_nyc_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -845,7 +845,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/panda_bamboo_i2v.png');
+  background-image: url('../images/panda_bamboo_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -855,7 +855,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/wave_i2v.png');
+  background-image: url('../images/wave_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -865,7 +865,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/car_i2v.png');
+  background-image: url('../images/car_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -875,7 +875,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/robot_i2v.png');
+  background-image: url('../images/robot_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -885,7 +885,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/Girl_with_a_Pearl_Earring.png');
+  background-image: url('../images/Girl_with_a_Pearl_Earring.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -895,7 +895,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/newton.png');
+  background-image: url('../images/newton.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -905,7 +905,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/flag_i2v.png');
+  background-image: url('../images/flag_i2v.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -915,7 +915,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/nebula.png');
+  background-image: url('../images/nebula.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -925,7 +925,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/starry_night.png');
+  background-image: url('../images/starry_night.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -935,7 +935,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/the_great_wave.png');
+  background-image: url('../images/the_great_wave.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -945,7 +945,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/mona_lisa.png');
+  background-image: url('../images/mona_lisa.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -1077,7 +1077,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/butterfly_mask.png');
+  background-image: url('../images/butterfly_mask.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -1087,7 +1087,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/fire_mask.png');
+  background-image: url('../images/fire_mask.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -1097,7 +1097,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/lake_mask.png');
+  background-image: url('../images/lake_mask.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -1107,7 +1107,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/train_mask.png');
+  background-image: url('../images/train_mask.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -1124,7 +1124,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-image: url('../images/pharaoh.png');
+  background-image: url('../images/pharaoh.jpg');
   background-position: 50%;
   background-size: cover;
   position: absolute;
@@ -1247,7 +1247,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    background-image: url('../images/bigfoot_i2v.png'), url('https://d3e54v103j8qbb.cloudfront.net/img/background-image.svg');
+    background-image: url('../images/bigfoot_i2v.jpg'), url('https://d3e54v103j8qbb.cloudfront.net/img/background-image.svg');
     background-position: 50%, 0 0;
     background-size: cover, auto;
     position: absolute;
@@ -1257,7 +1257,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    background-image: url('../images/giraffe_i2v.png');
+    background-image: url('../images/giraffe_i2v.jpg');
     background-position: 50%;
     background-size: cover;
     position: absolute;
