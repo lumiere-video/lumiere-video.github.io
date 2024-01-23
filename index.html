@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html data-wf-page="658acfc5822f338b47edbc52" data-wf-site="658acfc5822f338b47edbc4e">
+<head>
+  <meta charset="utf-8">
+  <title>Lumiere</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  
+  <meta name="description" content="Space-Time Text-to-Video diffusion model by Google Research." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Lumiere - Google Research" />
+  <meta property="og:url" content="https://lumiere-video.github.io" />
+  <meta property="og:title" content="Lumiere - Google Research" />
+  <meta property="og:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
+  <meta property="og:image" content="https://lh3.googleusercontent.com/GSu82W-B-xKtrG1REX9QrcM3FTBH8fHKIVIgQhnk8SBZkG_9sFhG6rr7--ZClFp_LLGDWTfH0qw87BtBLqVN3fn22iE7DQEy_sspPWdM=w2880-e365-pa-nu" />
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:site" content="GoogleAI" />
+  <meta property="twitter:title" content="Lumiere - Google Research" />
+  <meta property="twitter:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
+  <meta property="twitter:image" content="https://lh3.googleusercontent.com/GSu82W-B-xKtrG1REX9QrcM3FTBH8fHKIVIgQhnk8SBZkG_9sFhG6rr7--ZClFp_LLGDWTfH0qw87BtBLqVN3fn22iE7DQEy_sspPWdM=w2880-e365-pa-nu" />  
+
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.png" rel="apple-touch-icon">
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
+
+    if ("IntersectionObserver" in window) {
+      var lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(function(video) {
+          if (video.isIntersecting) {
+            for (var source in video.target.children) {
+              var videoSource = video.target.children[source];
+              if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+                videoSource.src = videoSource.dataset.src;
+              }
+            }
+
+            video.target.load();
+            video.target.classList.remove("lazy");
+            lazyVideoObserver.unobserve(video.target);
+          }
+        });
+      });
+
+      lazyVideos.forEach(function(lazyVideo) {
+        lazyVideoObserver.observe(lazyVideo);
+      });
+    }
+  });
+  </script>
+</head>
+<body class="body">
+  <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
+    <div class="container-5 w-container">
+      <a href="#" class="w-nav-brand"></a>
+      <nav role="navigation" class="nav-menu w-nav-menu">
+        <a href="#section_text_to_video" class="navitem w-nav-link">Text-to-Video</a>
+        <a href="#section_image_to_video" class="navitem w-nav-link">Image-to-Video</a>
+        <a href="#section_stylized_generation" class="navitem w-nav-link">Stylized Generation</a>
+        <a href="#section_video_stylization" class="navitem w-nav-link">Video Stylization</a>
+        <a href="#section_magic_animator" class="navitem w-nav-link">Cinemagraphs</a>
+        <a href="#section_inpainting" class="navitem w-nav-link">Inpainting</a>
+      </nav>
+      <div class="w-nav-button">
+        <div class="icon w-icon-nav-menu"></div>
+      </div>
+    </div>
+  </div>
+  <section class="hero-heading-left">
+    <div class="container-2">
+      <div class="hero-wrapper">
+        <div class="hero-split">
+          <p class="paragraph" style="font-size: 24px;">Google Research</p>
+          <h1 class="heading-5">LUMIERE</h1>
+          <p class="margin-bottom-24px">A Space-Time Diffusion Model for Realistic Video Generation</p>
+          <a href="#" class="button-primary w-button">Read Paper</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sectionwhite" style="background: black; padding-top: 0px;">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <div style="padding-top:56.17021276595745%;" class="w-embed-youtubevideo youtube">
+        <iframe src="https://www.youtube.com/embed/wxLr02Dz2Sc?rel=0&amp;controls=0&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="position:absolute; top:0%; left:0%; height:100%; width:100%; pointer-events:auto" allow="autoplay; encrypted-media" allowfullscreen="" title="Lumiere"></iframe>
+      </div>
+    </div>
+  </section>
+  <section id="section_text_to_video" class="sectiongrey">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <h1 class="heading-7">Text-to-Video</h1>
+      <p class="paragraphhover"><br>* Hover over the video to see the input prompt.</p>
+      <div data-delay="5000" data-animation="cross" class="slidermaingallery w-slider" data-autoplay="true" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
+        <div class="w-slider-mask">
+          <div class="w-slide">
+            <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54a4-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54a5-47edbc52" class="w-layout-cell cell">
+                <div data-w-id="b089a400-1bc3-efe0-5f8f-2ec68167a65e" class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/hitchiker.webm" type="video/webm"><source data-src="videos/text-to-video/hitchiker.mp4" type="video/mp4"></video>
+                  <div data-w-id="26ffae97-1635-7580-6840-e205e545c3d0" class="text-caption-div">
+                    <div class="captiontextbox">Aerial Around Young Hiker Man Standing on Mountain Peak Summit At Sunrise</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54a7-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/northern_lights.webm" type="video/webm"><source data-src="videos/text-to-video/northern_lights.mp4" type="video/mp4"></video>
+                  <div data-w-id="4ee118c8-d294-6db5-c703-58a7e0bd8271" class="text-caption-div">
+                    <div class="captiontextbox">Aurora Borealis Green Loop Winter Mountain Ridges Northern Lights</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54a9-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/astronaut.webm" type="video/webm"><source data-src="videos/text-to-video/astronaut.mp4" type="video/mp4"></video>
+                  <div data-w-id="30d96933-9d7a-278f-2aeb-b70b6ec11770" class="text-caption-div">
+                    <div class="captiontextbox">Astronaut on the planet Mars making a detour around his base</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54ab-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/red_sunglasses_dog.webm" type="video/webm"><source data-src="videos/text-to-video/red_sunglasses_dog.mp4" type="video/mp4"></video>
+                  <div data-w-id="70479f7d-e3c4-48d2-3ce3-1ac3156c89a3" class="text-caption-div">
+                    <div class="captiontextbox">A dog driving a car on a suburban street wearing funny sunglasses</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54ad-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/yellow_jacket.webm" type="video/webm"><source data-src="videos/text-to-video/yellow_jacket.mp4" type="video/mp4"></video>
+                  <div data-w-id="59d4ff8f-e27d-2c11-9a34-4ff4aeb16465" class="text-caption-div">
+                    <div class="captiontextbox">Back view on young woman dressed in a bright yellow jacket walk in outdoor forest</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54af-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/golden_retriever_running.webm" type="video/webm"><source data-src="videos/text-to-video/golden_retriever_running.mp4" type="video/mp4"></video>
+                  <div data-w-id="f57ae7c4-6588-8354-426d-99ff48cafddf" class="text-caption-div">
+                    <div class="captiontextbox">Golden retriever puppy running in the park. Autumn. Beautiful leaves on the ground.</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54b1-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/Chocolate_syrup_pouring_on_a_vanilla_ice_cream_DSLR_photograph.webm" type="video/webm"><source data-src="videos/text-to-video/Chocolate_syrup_pouring_on_a_vanilla_ice_cream_DSLR_photograph.mp4" type="video/mp4"></video>
+                  <div data-w-id="0248de4b-e47b-bf02-31c6-0d0591b640a4" class="text-caption-div">
+                    <div class="captiontextbox">Chocolate syrup pouring on vanilla ice cream</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_7202d2ad-58dd-cd36-10ba-96916f5b54b3-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/cherry_blossom.webm" type="video/webm"><source data-src="videos/text-to-video/cherry_blossom.mp4" type="video/mp4"></video>
+                  <div data-w-id="85665cef-e5ca-ce8d-895f-45d61d5334be" class="text-caption-div">
+                    <div class="captiontextbox">Bloomming cherry tree in the garden beautiful sun light</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c0f-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c10-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/cinematic_boat.webm" type="video/webm"><source data-src="videos/text-to-video/cinematic_boat.mp4" type="video/mp4"></video>
+                  <div data-w-id="eda46612-0585-d28b-6b63-990ad29a9a56" class="text-caption-div">
+                    <div class="captiontextbox">Sailboat sailing on a sunny day in a mountain lake</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c12-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/cinematic_couple.webm" type="video/webm"><source data-src="videos/text-to-video/cinematic_couple.mp4" type="video/mp4"></video>
+                  <div data-w-id="5a44ca76-6c5f-0705-7095-2ecd8eb44712" class="text-caption-div">
+                    <div class="captiontextbox">A young couple walking in a heavy rain</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c14-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/cinematic_panda1.webm" type="video/webm"><source data-src="videos/text-to-video/cinematic_panda1.mp4" type="video/mp4"></video>
+                  <div data-w-id="1be3611e-3d18-b29f-2353-82501b89b285" class="text-caption-div">
+                    <div class="captiontextbox">A panda eating bamboo on a rock</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c16-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/cinematic_ox.webm" type="video/webm"><source data-src="videos/text-to-video/cinematic_ox.mp4" type="video/mp4"></video>
+                  <div data-w-id="6c0219d2-fff0-b46a-604c-f8c388928ca0" class="text-caption-div">
+                    <div class="captiontextbox">A musk ox grazing on a beautiful wildflowers</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c18-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/cinematic_horserider.webm" type="video/webm"><source data-src="videos/text-to-video/cinematic_horserider.mp4" type="video/mp4"></video>
+                  <div data-w-id="b90e0845-2538-a87e-c143-acd40e10e1b4" class="text-caption-div">
+                    <div class="captiontextbox">A knight riding on a horse through the countryside</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c1a-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/cinematic_temple.webm" type="video/webm"><source data-src="videos/text-to-video/cinematic_temple.mp4" type="video/mp4"></video>
+                  <div data-w-id="56b199fe-013f-4de0-f0ee-9e18ae93b7cf" class="text-caption-div">
+                    <div class="captiontextbox">Flying through a temple in ruins</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c1c-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/grass_autumn_cinematic.webm" type="video/webm"><source data-src="videos/text-to-video/grass_autumn_cinematic.mp4" type="video/mp4"></video>
+                  <div data-w-id="06f085a9-316d-6657-8424-14f2a59f0240" class="text-caption-div">
+                    <div class="captiontextbox">Camera moving through dry grass at autumn morning</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_9ce5abe8-28a7-ff3d-2949-548cc6e16c1e-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/fireworks.webm" type="video/webm"><source data-src="videos/text-to-video/fireworks.mp4" type="video/mp4"></video>
+                  <div data-w-id="2ee689fb-4d42-4f1e-1fb0-c7ecd1644b0d" class="text-caption-div">
+                    <div class="captiontextbox">Aerial view of colorful fireworks exploding in the night sky</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23bb-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23bc-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/flag_sunrise.webm" type="video/webm"><source data-src="videos/text-to-video/flag_sunrise.mp4" type="video/mp4"></video>
+                  <div data-w-id="19973d7f-75e2-13aa-b971-a2f71a8ba1f6" class="text-caption-div">
+                    <div class="captiontextbox">US flag waving on massive sunrise clouds</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23c1-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/beer_pouring.webm" type="video/webm"><source data-src="videos/text-to-video/beer_pouring.mp4" type="video/mp4"></video>
+                  <div data-w-id="2dc9b5ee-55c8-c6f8-6da3-3b6ae7bc08ee" class="text-caption-div">
+                    <div class="captiontextbox">Beer pouring into glass</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23c6-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/dog_headphones.webm" type="video/webm"><source data-src="videos/text-to-video/dog_headphones.mp4" type="video/mp4"></video>
+                  <div data-w-id="51b8a230-82cd-0072-a941-c879f7cc4cd6" class="text-caption-div">
+                    <div class="captiontextbox">Funny cute pug dog feeling good listening to music with big headphones and swinging head</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23cb-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/sunset.webm" type="video/webm"><source data-src="videos/text-to-video/sunset.mp4" type="video/mp4"></video>
+                  <div data-w-id="5b738ef2-f9e6-a5a7-a6e3-afdfaef4309a" class="text-caption-div">
+                    <div data-w-id="20fa0af7-7eda-1d02-5836-42fc592a23ce" class="captiontextbox">Sunset timelapse at the beach</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23d0-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/yellow_flowers.webm" type="video/webm"><source data-src="videos/text-to-video/yellow_flowers.mp4" type="video/mp4"></video>
+                  <div data-w-id="0f13eb50-7d8f-7b6f-8899-42a3872f2101" class="text-caption-div">
+                    <div class="captiontextbox">Yellow flowers swing in the wind</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23d5-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/Jack_russell_terrier_dog_snowboarding.webm" type="video/webm"><source data-src="videos/text-to-video/Jack_russell_terrier_dog_snowboarding.mp4" type="video/mp4"></video>
+                  <div data-w-id="e4c6f9c8-938e-5fa7-7841-0d1963f93c14" class="text-caption-div">
+                    <div class="captiontextbox">Jack russel terrier snowboarding. GoPro shot.</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23da-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/red_car.webm" type="video/webm"><source data-src="videos/text-to-video/red_car.mp4" type="video/mp4"></video>
+                  <div data-w-id="0279cbf8-fd05-1646-597e-3164b82a1087" class="text-caption-div">
+                    <div class="captiontextbox">A red lamborghini aventador coming around abend in a mountain road</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_20fa0af7-7eda-1d02-5836-42fc592a23e1-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/orange_fish.webm" type="video/webm"><source data-src="videos/text-to-video/orange_fish.mp4" type="video/mp4"></video>
+                  <div data-w-id="92dbea43-3b33-cb92-1fbe-9c31a6954725" class="text-caption-div">
+                    <div class="captiontextbox">Bright underwater world orange fish</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e6c-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e6d-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/teddybear_surf2.webm" type="video/webm"><source data-src="videos/text-to-video/teddybear_surf2.mp4" type="video/mp4"></video>
+                  <div data-w-id="fa60b8a2-9a0d-be3c-1a2b-6263c5b3fb86" class="text-caption-div">
+                    <div class="captiontextbox">Confident teddy bear surfer rides the wave in the tropics</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e72-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/poodle.webm" type="video/webm"><source data-src="videos/text-to-video/poodle.mp4" type="video/mp4"></video>
+                  <div data-w-id="f46fe077-0235-44ea-7e95-b1b77fd3f333" class="text-caption-div">
+                    <div class="captiontextbox">Toy poodle dog rides a penny board outdoors</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e77-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/muffin.webm" type="video/webm"><source data-src="videos/text-to-video/muffin.mp4" type="video/mp4"></video>
+                  <div data-w-id="5308ad20-5f6a-65eb-cff3-c3688b7db320" class="text-caption-div">
+                    <div class="captiontextbox">Chocolate muffin video clip</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e7c-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/mouse.webm" type="video/webm"><source data-src="videos/text-to-video/mouse.mp4" type="video/mp4"></video>
+                  <div data-w-id="47d1054e-b4ea-3623-edec-e88cb4a213c5" class="text-caption-div">
+                    <div class="captiontextbox">A cute mouse typing on a keyboard</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e81-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/sushi.webm" type="video/webm"><source data-src="videos/text-to-video/sushi.mp4" type="video/mp4"></video>
+                  <div data-w-id="12b8bf76-3385-a3e5-cbb6-e089a79088c6" class="text-caption-div">
+                    <div class="captiontextbox">360 camera shot of a sushi roll in a restaurant</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e86-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/colorful_fish.webm" type="video/webm"><source data-src="videos/text-to-video/colorful_fish.mp4" type="video/mp4"></video>
+                  <div data-w-id="bcdd13b6-2107-1d8c-fdf8-4aa9613f391d" class="text-caption-div">
+                    <div class="captiontextbox">Colorful fish swimming underwater</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e8b-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/panda_ukulele.webm" type="video/webm"><source data-src="videos/text-to-video/panda_ukulele.mp4" type="video/mp4"></video>
+                  <div data-w-id="4631a2a8-9bb1-feaf-bbc7-762bfe0f0cf4" class="text-caption-div">
+                    <div class="captiontextbox">Panda play ukelele at home</div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_32a21c44-1116-d473-3658-3c32c2988e92-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/text-to-video/wolf.webm" type="video/webm"><source data-src="videos/text-to-video/wolf.mp4" type="video/mp4"></video>
+                  <div data-w-id="6176b6f0-645b-5bd5-f289-7351364832c0" class="text-caption-div">
+                    <div class="captiontextbox">Silhouette of a wolf against a twilight sky</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="left-arrow w-slider-arrow-left">
+          <div class="iconslider w-icon-slider-left"></div>
+        </div>
+        <div class="w-slider-arrow-right">
+          <div class="iconslider w-icon-slider-right"></div>
+        </div>
+        <div class="w-slider-nav w-slider-nav-invert w-round"></div>
+      </div>
+    </div>
+  </section>
+  <section id="section_image_to_video" class="sectionwhite">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <h1 class="heading-7">Image-to-Video</h1>
+      <p class="paragraphhover"><br>* Hover over the video to see the input image and prompt.</p>
+      <div data-delay="5000" data-animation="cross" class="slidermaingallery w-slider" data-autoplay="true" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
+        <div class="w-slider-mask">
+          <div class="w-slide">
+            <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0a8-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0a9-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/sad_cat.webm" type="video/webm"><source data-src="videos/image-to-video/sad_cat.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0ac" class="sadcati2v">
+                    <div class="im2vidcaption">A sad cat in a striped navy blue shirt<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0b1-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/teddy_snow.webm" type="video/webm"><source data-src="videos/image-to-video/teddy_snow.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0b4" class="teddybear_snow_i2v">
+                    <div class="im2vidcaption">A teddybear dancing in the snow skeleton<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0b8-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/skeleton.webm" type="video/webm"><source data-src="videos/image-to-video/skeleton.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0bb" class="skeletoni2v">
+                    <div class="im2vidcaption">A spooky skeleton<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0c0-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/turtle_swimming.webm" type="video/webm"><source data-src="videos/image-to-video/turtle_swimming.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0c3" class="turtle_i2v">
+                    <div class="im2vidcaption">A turtle swimming<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0c7-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/pirate_ships.webm" type="video/webm"><source data-src="videos/image-to-video/pirate_ships.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0ca" class="ship_i2v">
+                    <div class="im2vidcaption">Flying through an intense battle between pirate ships in a stormy ocean<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0ce-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/panda_popcorn.webm" type="video/webm"><source data-src="videos/image-to-video/panda_popcorn.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0d1" class="panda_popcorn_i2v">
+                    <div class="im2vidcaption">An escaped panda eating popcorn in the park<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0d5-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/bee_honey.webm" type="video/webm"><source data-src="videos/image-to-video/bee_honey.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0d8" class="beei2v">
+                    <div class="im2vidcaption">A bee holding a jar of honey<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0dd-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/monkey_coffee.webm" type="video/webm"><source data-src="videos/image-to-video/monkey_coffee.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0e0" class="monkey_coffee_i2v">
+                    <div class="im2vidcaption">A monkey drinking coffee while working on his laptop<br></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0e5-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0e6-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/fire_snowy.webm" type="video/webm"><source data-src="videos/image-to-video/fire_snowy.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0e9" class="bonefire_i2v">
+                    <div class="im2vidcaption">Campfire at night in a snowy forest with starry sky in the background<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0ed-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/bigfoot_woods.webm" type="video/webm"><source data-src="videos/image-to-video/bigfoot_woods.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0f0" class="bigfooti2v">
+                    <div class="im2vidcaption">Bigfoot walking through the woods<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0f5-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/factory_robot.webm" type="video/webm"><source data-src="videos/image-to-video/factory_robot.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0f8" class="robot_i2v">
+                    <div class="im2vidcaption">A factory robot assembling intricate electronic components with precision<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb0fc-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/teddy_running.webm" type="video/webm"><source data-src="videos/image-to-video/teddy_running.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb0ff" class="teddybear_nyc_i2v">
+                    <div class="im2vidcaption">A teddy bear running in New York city<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb103-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/panda_bamboo.webm" type="video/webm"><source data-src="videos/image-to-video/panda_bamboo.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb106" class="panda_bamboo_i2v">
+                    <div class="im2vidcaption">A panda eating bamboo on a rock<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb10a-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/giraffe.webm" type="video/webm"><source data-src="videos/image-to-video/giraffe.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb10d" class="giraffei2v">
+                    <div class="im2vidcaption">A giraffe eating grass<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb112-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/wave.webm" type="video/webm"><source data-src="videos/image-to-video/wave.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb115" class="wave_i2v">
+                    <div class="im2vidcaption">A relaxed ocean waves video<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb11a-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/car.webm" type="video/webm"><source data-src="videos/image-to-video/car.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb11d" class="car_i2v">
+                    <div class="im2vidcaption">A car driving on the beach<br></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb123-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb124-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/sailboat.webm" type="video/webm"><source data-src="videos/image-to-video/sailboat.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb127" class="sailboat">
+                    <div class="im2vidcaption">Sailboat sailing on a sunny day in a mountain lake<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb12c-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/panda_car.webm" type="video/webm"><source data-src="videos/image-to-video/panda_car.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb12f" class="pandacari2v">
+                    <div class="im2vidcaption">A panda bear driving a car<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb133-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/elephant_bday.webm" type="video/webm"><source data-src="videos/image-to-video/elephant_bday.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb136" class="elephant_i2v">
+                    <div class="im2vidcaption">A happy elephant wearing a birthday hat walking under the sea<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb13a-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/snowflake.webm" type="video/webm"><source data-src="videos/image-to-video/snowflake.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb13d" class="snowi2v">
+                    <div class="im2vidcaption">A snowflake falls from the sky<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb142-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/pistachio_icecream.webm" type="video/webm"><source data-src="videos/image-to-video/pistachio_icecream.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb145" class="icecream_i2v">
+                    <div class="im2vidcaption">Melting pistachio ice cream dripping down the cone<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb149-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/teddy_skating.webm" type="video/webm"><source data-src="videos/image-to-video/teddy_skating.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb14c" class="teddybear_skate_i2v">
+                    <div class="im2vidcaption">A teddy bear skating in Times Square<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb150-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/sloth_laptop.webm" type="video/webm"><source data-src="videos/image-to-video/sloth_laptop.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb153" class="sloth_i2v">
+                    <div class="im2vidcaption">A fluffy baby sloth with an orange knitted hat trying to figure out a laptop<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb157-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/cat_piano.webm" type="video/webm"><source data-src="videos/image-to-video/cat_piano.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb15a" class="cati2v">
+                    <div class="im2vidcaption">A cat playing the piano<br></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb160-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb161-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/girl_pearl_earring.webm" type="video/webm"><source data-src="videos/image-to-video/girl_pearl_earring.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb164" class="girl_earrings_i2v">
+                    <div class="im2vidcaption">A girl winking and smiling<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb168-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/newton.webm" type="video/webm"><source data-src="videos/image-to-video/newton.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb16b" class="newton_i2v">
+                    <div class="im2vidcaption">A man smiling and waving<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb16f-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/soldiers_flag.webm" type="video/webm"><source data-src="videos/image-to-video/soldiers_flag.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb172" class="flag_2_i2v">
+                    <div class="im2vidcaption">Soldiers raising the united states flag on a windy day.<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb176-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/nebula.webm" type="video/webm"><source data-src="videos/image-to-video/nebula.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb179" class="nebula_i2v">
+                    <div class="im2vidcaption">Zooming through a nebula with many twinkling stars<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb17d-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/starry_night.webm" type="video/webm"><source data-src="videos/image-to-video/starry_night.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb180" class="starry_night_i2v">
+                    <div class="im2vidcaption">A timelapse oil painting of a starry night with cloud moving<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb184-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/big_wave.webm" type="video/webm"><source data-src="videos/image-to-video/big_wave.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb187" class="the_great_wave_i2v">
+                    <div class="im2vidcaption">a big ocean wave<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb18b-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/mona_lisa.webm" type="video/webm"><source data-src="videos/image-to-video/mona_lisa.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb18e" class="mona_lisa_i2v">
+                    <div class="im2vidcaption">A woman looking tired and yawning<br></div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2201f5d2-345d-16de-2ea2-cdb0259cb192-47edbc52" class="w-layout-cell cell">
+                <div class="div-block-6">
+                  <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/image-to-video/pharaoh.webm" type="video/webm"><source data-src="videos/image-to-video/pharaoh.mp4" type="video/mp4"></video>
+                  <div data-w-id="2201f5d2-345d-16de-2ea2-cdb0259cb195" class="pharaoh">
+                    <div class="im2vidcaption">Ancient pharaoh smiling and shaking his head<br></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="left-arrow w-slider-arrow-left">
+          <div class="iconslider w-icon-slider-left"></div>
+        </div>
+        <div class="w-slider-arrow-right">
+          <div class="iconslider w-icon-slider-right"></div>
+        </div>
+        <div class="w-slider-nav w-slider-nav-invert w-round"></div>
+      </div>
+    </div>
+  </section>
+  <section id="section_stylized_generation" class="sectiongrey">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <h1 class="heading-7">Stylized Generation</h1>
+      <p class="paragraph-2">Using a single reference image, Lumiere can generate videos in the target style by utilizing fine-tuned text-to-image model weights. <br>* Hover over the video to see the prompt.</p>
+      <div data-delay="5000" data-animation="cross" class="slidermaingallery w-slider" data-autoplay="true" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
+        <div class="w-slider-mask">
+          <div class="w-slide">
+            <div id="w-node-_5922732f-6f7e-e144-2324-bc8666289fd7-47edbc52" class="w-layout-layout quickstackstyledrophighlevel wf-layout-layout">
+              <div id="w-node-bbe4e5f2-fa17-6da5-e60a-2c1a23da4869-47edbc52" class="w-layout-cell cell-9"><img src="images/20710341_3wjw_xfps_210629.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/20710341_3wjw_xfps_210629-p-500.jpg 500w, images/20710341_3wjw_xfps_210629-p-800.jpg 800w, images/20710341_3wjw_xfps_210629-p-1080.jpg 1080w, images/20710341_3wjw_xfps_210629-p-1600.jpg 1600w, images/20710341_3wjw_xfps_210629-p-2000.jpg 2000w, images/20710341_3wjw_xfps_210629-p-2600.jpg 2600w, images/20710341_3wjw_xfps_210629-p-3200.jpg 3200w, images/20710341_3wjw_xfps_210629.jpg 4421w" alt="" class="imagestyleexample"></div>
+              <div id="w-node-e5691e10-897b-01db-7553-9d49d8725e83-47edbc52" class="w-layout-cell">
+                <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156ccf-47edbc52" class="w-layout-layout quickstackstyledropgallery_styledrop wf-layout-layout">
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cd0-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/family of ducks.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/family of ducks.mp4" type="video/mp4"></video>
+                      <div data-w-id="9dc2a833-17fa-28e9-94a3-3921244f4be6" class="text-caption-div">
+                        <div data-w-id="c7dddf3d-055e-3783-ea3d-8a138f0693d5" class="captiontextbox">A family of ducks swimming in a pond<br></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cd2-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/butterfly.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/butterfly.mp4" type="video/mp4"></video>
+                      <div data-w-id="0f3e8adf-af09-ca97-39d9-8fe702388f12" class="text-caption-div">
+                        <div class="captiontextbox">A butterfly fluttering from flower to flower</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cd4-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/parrot.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/parrot.mp4" type="video/mp4"></video>
+                      <div data-w-id="b5fd37cd-8df3-b731-c8a0-a3db7eb19aaa" class="text-caption-div">
+                        <div class="captiontextbox">A colorful parrot showing off its vibrant feathers</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cd6-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/owl.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/owl.mp4" type="video/mp4"></video>
+                      <div data-w-id="a070817a-3c5d-beec-f35f-369f096a56c4" class="text-caption-div">
+                        <div class="captiontextbox">An owl perched on a branch</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cd8-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/koala.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/koala.mp4" type="video/mp4"></video>
+                      <div data-w-id="05b4e232-fd67-f1dc-48b5-fff84fc2edc1" class="text-caption-div">
+                        <div class="captiontextbox">A koala munching on eucalyptus leaves</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cda-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/rabbit with carrot.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/rabbit with carrot.mp4" type="video/mp4"></video>
+                      <div data-w-id="ef90af85-de4d-618d-8ac6-79fb6e36e354" class="text-caption-div">
+                        <div class="captiontextbox">A cute bunny nibbling on a carrot</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cdc-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/squirrel gathering acorns.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/squirrel gathering acorns.mp4" type="video/mp4"></video>
+                      <div data-w-id="6b12530b-66f8-476b-3da1-53ca3588d3ab" class="text-caption-div">
+                        <div class="captiontextbox">A squirrel gathering acorns</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2275368d-e99b-c37f-a6e4-9d9c45156cde-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/sticker_style/fox.webm" type="video/webm"><source data-src="videos/styledrop/sticker_style/fox.mp4" type="video/mp4"></video>
+                      <div data-w-id="d1b3ab25-ccdf-75d2-40fe-a088f18b2af5" class="text-caption-div">
+                        <div class="captiontextbox">A fox frolicking in the forest<br></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_4c228223-8919-973d-9781-29c7967de493-47edbc52" class="w-layout-cell cell-10">
+                <p class="paragraph-3">Style reference image</p>
+              </div>
+              <div id="w-node-_23d2e6f5-ad1d-23c6-4f6d-26ccc7a2988d-47edbc52" class="w-layout-cell cell-11">
+                <p class="paragraph-4">&quot;Sticker&quot;</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_98e86abc-a0fe-0fdb-2df9-8c4f2fbeb259-47edbc52" class="w-layout-layout quickstackstyledrophighlevel wf-layout-layout">
+              <div id="w-node-_98e86abc-a0fe-0fdb-2df9-8c4f2fbeb25a-47edbc52" class="w-layout-cell cell-9"><img src="images/reference_image.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, 642px" srcset="images/reference_image-p-500.jpg 500w, images/reference_image.jpg 640w" alt="" class="imagestyleexample"></div>
+              <div id="w-node-_98e86abc-a0fe-0fdb-2df9-8c4f2fbeb25c-47edbc52" class="w-layout-cell">
+                <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb8121149b-47edbc52" class="w-layout-layout quickstackstyledropgallery_styledrop wf-layout-layout">
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb8121149c-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/owl.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/owl.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb8121149f" class="text-caption-div">
+                        <div class="captiontextbox">An owl perched on a branch<br></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb812114a4-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/snowflake.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/snowflake.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb812114a7" class="text-caption-div">
+                        <div class="captiontextbox">A flower blooming</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb812114ab-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/dolphin.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/dolphin.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb812114ae" class="text-caption-div">
+                        <div class="captiontextbox">A dolphin leaping out of the water</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb812114b1-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/swan.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/swan.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb812114b4" class="text-caption-div">
+                        <div class="captiontextbox">A swan swimming in a lake</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb812114b8-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/panda.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/panda.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb812114bb" class="text-caption-div">
+                        <div class="captiontextbox">A chubby panda munching on bamboo shoots</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb812114bf-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/dandelion.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/dandelion.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb812114c2" class="text-caption-div">
+                        <div class="captiontextbox">A drifting dandelion seed in the breeze</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb812114c5-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/lion.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/lion.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb812114c8" class="text-caption-div">
+                        <div class="captiontextbox">A lion with a majestic mane</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_7a82c752-af50-6cbc-ca0e-f5cb812114cc-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/melting_golden_3d/elephant.webm" type="video/webm"><source data-src="videos/styledrop/melting_golden_3d/elephant.mp4" type="video/mp4"></video>
+                      <div data-w-id="7a82c752-af50-6cbc-ca0e-f5cb812114cf" class="text-caption-div">
+                        <div class="captiontextbox">An elephant trumpeting joyfully<br></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_98e86abc-a0fe-0fdb-2df9-8c4f2fbeb296-47edbc52" class="w-layout-cell cell-10">
+                <p class="paragraph-3">Style reference image</p>
+              </div>
+              <div id="w-node-_98e86abc-a0fe-0fdb-2df9-8c4f2fbeb299-47edbc52" class="w-layout-cell cell-11">
+                <p class="paragraph-4">&quot;3D Melting Gold&quot;</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_23fc08d8-b213-ab2b-e1d6-cd7deb0b4944-47edbc52" class="w-layout-layout quickstackstyledrophighlevel wf-layout-layout">
+              <div id="w-node-_23fc08d8-b213-ab2b-e1d6-cd7deb0b4945-47edbc52" class="w-layout-cell cell-9"><img src="images/flat_cartoon_reference_image.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/flat_cartoon_reference_image-p-500.jpg 500w, images/flat_cartoon_reference_image-p-800.jpg 800w, images/flat_cartoon_reference_image-p-1080.jpg 1080w, images/flat_cartoon_reference_image-p-1600.jpg 1600w, images/flat_cartoon_reference_image-p-2000.jpg 2000w, images/flat_cartoon_reference_image-p-2600.jpg 2600w, images/flat_cartoon_reference_image-p-3200.jpg 3200w, images/flat_cartoon_reference_image.jpg 5000w" alt="" class="imagestyleexample"></div>
+              <div id="w-node-_23fc08d8-b213-ab2b-e1d6-cd7deb0b4947-47edbc52" class="w-layout-cell">
+                <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e4442-47edbc52" class="w-layout-layout quickstackstyledropgallery wf-layout-layout">
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e4443-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/bear twirling.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/bear twirling.mp4" type="video/mp4"></video>
+                      <div data-w-id="dee6bce4-9c99-88e7-7e84-73c41e3845c7" class="text-caption-div">
+                        <div class="captiontextbox">A bear twirling with delight</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e444a-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/bunny with carrot.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/bunny with carrot.mp4" type="video/mp4"></video>
+                      <div data-w-id="d0ecabb0-d408-75ca-3663-b944518b1f81" class="text-caption-div">
+                        <div class="captiontextbox">A cute bunny nibbling on a carrot</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e4450-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                    <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/dolphin leaping.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/dolphin leaping.mp4" type="video/mp4"></video>
+                        <div data-w-id="5b967569-3bff-9fb9-e11a-498d599d42b4" class="text-caption-div">
+                        <div class="captiontextbox">A dolphin leaping out of the water</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e4455-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/sunflower.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/sunflower.mp4" type="video/mp4"></video>
+                      <div data-w-id="063a35ab-8cec-331f-00d0-dca65285dc4a" class="text-caption-div">
+                        <div class="captiontextbox">A sunflower blooming</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e445b-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/hot air balloon.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/hot air balloon.mp4" type="video/mp4"></video>
+                      <div data-w-id="d5d20612-941d-de9c-46f7-d561b50112d3" class="text-caption-div">
+                        <div class="captiontextbox">A hot air balloon inflating and taking off</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e4461-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/owl on branch.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/owl on branch.mp4" type="video/mp4"></video>
+                      <div data-w-id="c9c59215-05f1-f19c-16f3-72541ddedd87" class="text-caption-div">
+                        <div class="captiontextbox">A wise owl perched on a tree branch</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e4466-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/peguins in the snow.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/peguins in the snow.mp4" type="video/mp4"></video>
+                      <div data-w-id="3383446d-cd89-f51d-daae-7c3a261b3d65" class="text-caption-div">
+                        <div class="captiontextbox">A group of penguins waddling in the snow</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2b61ef38-a2bb-55e3-5530-20748a4e446c-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/flat_cartoon_illustration/family of ducks.webm" type="video/webm"><source data-src="videos/styledrop/flat_cartoon_illustration/family of ducks.mp4" type="video/mp4"></video>
+                      <div data-w-id="5b988130-891e-4bbe-f789-92175844c829" class="text-caption-div">
+                        <div class="captiontextbox">A family of ducks swimming in a pond<br></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_23fc08d8-b213-ab2b-e1d6-cd7deb0b497d-47edbc52" class="w-layout-cell cell-10">
+                <p class="paragraph-3">Style reference image</p>
+              </div>
+              <div id="w-node-_23fc08d8-b213-ab2b-e1d6-cd7deb0b4980-47edbc52" class="w-layout-cell cell-11">
+                <p class="paragraph-4">&quot;Flat cartoon&quot;</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-baf04e47-a53f-34cf-8974-f128bcb97252-47edbc52" class="w-layout-layout quickstackstyledrophighlevel wf-layout-layout">
+              <div id="w-node-baf04e47-a53f-34cf-8974-f128bcb97253-47edbc52" class="w-layout-cell cell-9"><img src="images/3d_ref.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/3d_ref-p-500.jpg 500w, images/3d_ref-p-800.jpg 800w, images/3d_ref-p-1080.jpg 1080w, images/3d_ref.jpg 1296w" alt="" class="imagestyleexample"></div>
+              <div id="w-node-baf04e47-a53f-34cf-8974-f128bcb97255-47edbc52" class="w-layout-cell">
+                <div id="w-node-f74143ce-702f-a014-f616-deac3914a1a6-47edbc52" class="w-layout-layout quickstackstyledropgallery wf-layout-layout">
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1a7-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A bear dancing in 3d rendering style.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A bear dancing in 3d rendering style.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1aa" class="text-caption-div">
+                        <div class="captiontextbox">A bear dancing<br></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1af-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A colorful parrot showing off its vibrant feathers in 3d rendering style.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A colorful parrot showing off its vibrant feathers in 3d rendering style.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1b2" class="text-caption-div">
+                        <div class="captiontextbox">A colorful parrot showing off its vibrant feathers</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1b6-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A wise owl perched on a tree branch in 3d rendering style.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A wise owl perched on a tree branch in 3d rendering style.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1b9" class="text-caption-div">
+                        <div class="captiontextbox">An owl perched on a branch</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1bc-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A bunny hopping in a meadow in 3d rendering style.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A bunny hopping in a meadow in 3d rendering style.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1bf" class="text-caption-div">
+                        <div class="captiontextbox">A bunny hopping in a meadow</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1c3-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A butterfly fluttering from flower to flower in 3d rendering style 2.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A butterfly fluttering from flower to flower in 3d rendering style 2.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1c6" class="text-caption-div">
+                        <div class="captiontextbox">A butterfly fluttering from flower to flower</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1ca-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A family of ducks swimming in a pond in 3d rendering style 2.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A family of ducks swimming in a pond in 3d rendering style 2.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1cd" class="text-caption-div">
+                        <div class="captiontextbox">A family of ducks swimming in a pond</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1d0-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A friendly dolphin leaping out of the water in 3d rendering style 2.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A friendly dolphin leaping out of the water in 3d rendering style 2.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1d3" class="text-caption-div">
+                        <div class="captiontextbox">A dolphin leaping out of the water</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-f74143ce-702f-a014-f616-deac3914a1d7-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/3d_render/A graceful swan griding across a serene lake in 3d rendering style.webm" type="video/webm"><source data-src="videos/styledrop/3d_render/A graceful swan griding across a serene lake in 3d rendering style.mp4" type="video/mp4"></video>
+                      <div data-w-id="f74143ce-702f-a014-f616-deac3914a1da" class="text-caption-div">
+                        <div class="captiontextbox">A graceful swan griding across a serene lake<br></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-baf04e47-a53f-34cf-8974-f128bcb9728b-47edbc52" class="w-layout-cell cell-10">
+                <p class="paragraph-3">Style reference image</p>
+              </div>
+              <div id="w-node-baf04e47-a53f-34cf-8974-f128bcb9728e-47edbc52" class="w-layout-cell cell-11">
+                <p class="paragraph-4">&quot;3D Rendering&quot;</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_2afbb6f4-775c-e186-670d-302a2e82e379-47edbc52" class="w-layout-layout quickstackstyledrophighlevel wf-layout-layout">
+              <div id="w-node-_2afbb6f4-775c-e186-670d-302a2e82e37a-47edbc52" class="w-layout-cell cell-9"><img src="images/cartoon_line_drawing_reference_image.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/cartoon_line_drawing_reference_image-p-500.jpg 500w, images/cartoon_line_drawing_reference_image-p-800.jpg 800w, images/cartoon_line_drawing_reference_image-p-1080.jpg 1080w, images/cartoon_line_drawing_reference_image-p-1600.jpg 1600w, images/cartoon_line_drawing_reference_image.jpg 1822w" alt="" class="imagestyleexample"></div>
+              <div id="w-node-_2afbb6f4-775c-e186-670d-302a2e82e37c-47edbc52" class="w-layout-cell">
+                <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c70-47edbc52" class="w-layout-layout quickstackstyledropgallery wf-layout-layout">
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c71-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/owl on branch 1.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/owl on branch 1.mp4" type="video/mp4"></video>
+                      <div data-w-id="e8b33d7e-fcfc-8c23-9399-19caf3557689" class="text-caption-div">
+                        <div class="captiontextbox">An owl perched on a branch<br></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c78-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/lion with majestic mane.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/lion with majestic mane.mp4" type="video/mp4"></video>
+                      <div data-w-id="b846cea7-54d8-cd10-6eda-feea887d3b68" class="text-caption-div">
+                        <div class="captiontextbox">A lion with a majestic mane</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c7e-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/a cartoon line drawing of a koala munching on eucalyptus leaves.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/a cartoon line drawing of a koala munching on eucalyptus leaves.mp4" type="video/mp4"></video>
+                      <div data-w-id="c6f57bad-a081-dd9b-1ef7-45d75a0dcac2" class="text-caption-div">
+                        <div class="captiontextbox">A koala munching on eucalyptus leaves</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c83-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/fox.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/fox.mp4" type="video/mp4"></video>
+                      <div data-w-id="7b734483-604e-4619-21ee-42c869394d4a" class="text-caption-div">
+                        <div class="captiontextbox">A fox frolicking in the forest</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c89-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/squirrel.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/squirrel.mp4" type="video/mp4"></video>
+                      <div data-w-id="7163225e-1c3a-1548-5ae9-25c1b3dff466" class="text-caption-div">
+                        <div class="captiontextbox">A squirrrel gathering acorns</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c8f-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/a cartoon line drawing of a majestic horse.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/a cartoon line drawing of a majestic horse.mp4" type="video/mp4"></video>
+                      <div data-w-id="6da90b5c-0102-e298-9f6f-626f12e227df" class="text-caption-div">
+                        <div class="captiontextbox">A majestic horse</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c94-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/bear.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/bear.mp4" type="video/mp4"></video>
+                      <div data-w-id="5933ab7d-36d0-7025-91db-e9d272e1dbeb" class="text-caption-div">
+                        <div class="captiontextbox">A bear</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_2c973105-c396-f035-f3b5-9ae1cae01c9a-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/cartoon_line_drawing/a cartoon line drawing of a monkey.webm" type="video/webm"><source data-src="videos/styledrop/cartoon_line_drawing/a cartoon line drawing of a monkey.mp4" type="video/mp4"></video>
+                      <div data-w-id="8b92a6d8-a349-ba36-bc99-87dd4378923f" class="text-caption-div">
+                        <div class="captiontextbox">A monkey<br></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_2afbb6f4-775c-e186-670d-302a2e82e3b6-47edbc52" class="w-layout-cell cell-10">
+                <p class="paragraph-3">Style reference image</p>
+              </div>
+              <div id="w-node-_2afbb6f4-775c-e186-670d-302a2e82e3b9-47edbc52" class="w-layout-cell cell-11">
+                <p class="paragraph-4">&quot;Line drawing&quot;</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_1a49e828-9129-7a8f-62b5-ee97d1874582-47edbc52" class="w-layout-layout quickstackstyledrophighlevel wf-layout-layout">
+              <div id="w-node-_1a49e828-9129-7a8f-62b5-ee97d1874583-47edbc52" class="w-layout-cell cell-9"><img src="images/glow_ref.jpeg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/glow_ref-p-500.jpeg 500w, images/glow_ref-p-800.jpeg 800w, images/glow_ref-p-1080.jpeg 1080w, images/glow_ref.jpeg 1294w" alt="" class="imagestyleexample"></div>
+              <div id="w-node-_1a49e828-9129-7a8f-62b5-ee97d1874585-47edbc52" class="w-layout-cell">
+                <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16ce-47edbc52" class="w-layout-layout quickstackstyledropgallery wf-layout-layout">
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16cf-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A colorful parrot showing off its vibrant feathers in glowing style.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A colorful parrot showing off its vibrant feathers in glowing style.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc16d2" class="text-caption-div">
+                        <div class="captiontextbox">A colorful parrot showing off its vibrant feathers<br></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16d7-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A bear dancing in glowing style.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A bear dancing in glowing style.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc16da" class="text-caption-div">
+                        <div class="captiontextbox">A bear dancing</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16de-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A butterfly fluttering from flower to flower in glowing style.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A butterfly fluttering from flower to flower in glowing style.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc16e1" class="text-caption-div">
+                        <div class="captiontextbox">A butterfly fluttering from flower to flower</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16e4-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A horse galloping across a field in glowing style.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A horse galloping across a field in glowing style.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc16e7" class="text-caption-div">
+                        <div class="captiontextbox">A horse galloping</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16eb-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A dragon breathing gentle flames in glowing style.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A dragon breathing gentle flames in glowing style.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc16ee" class="text-caption-div">
+                        <div class="captiontextbox">A dragon</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16f2-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A penguin dancing in glowing style.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A penguin dancing in glowing style.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc16f5" class="text-caption-div">
+                        <div class="captiontextbox">A penguin dancing</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16f8-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A giraffe gracefully stretching its neck in glowing style 2.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A giraffe gracefully stretching its neck in glowing style 2.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc16fb" class="text-caption-div">
+                        <div class="captiontextbox">A giraffe</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_3bf63c54-8b0a-5528-2a8a-ef9480bc16ff-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/glowing/A lion with a majestic mane roaring in glowing style.webm" type="video/webm"><source data-src="videos/styledrop/glowing/A lion with a majestic mane roaring in glowing style.mp4" type="video/mp4"></video>
+                      <div data-w-id="3bf63c54-8b0a-5528-2a8a-ef9480bc1702" class="text-caption-div">
+                        <div class="captiontextbox">A lion with a majestic mane roaring<br></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_1a49e828-9129-7a8f-62b5-ee97d18745bf-47edbc52" class="w-layout-cell cell-10">
+                <p class="paragraph-3">Style reference image</p>
+              </div>
+              <div id="w-node-_1a49e828-9129-7a8f-62b5-ee97d18745c2-47edbc52" class="w-layout-cell cell-11">
+                <p class="paragraph-4">&quot;Glowing&quot;</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-slide">
+            <div id="w-node-_1e9b5add-8d94-b4e0-7080-d125422c055f-47edbc52" class="w-layout-layout quickstackstyledrophighlevel wf-layout-layout">
+              <div id="w-node-_1e9b5add-8d94-b4e0-7080-d125422c0560-47edbc52" class="w-layout-cell cell-9"><img src="images/watercolor_reference_image.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, 642px" srcset="images/watercolor_reference_image-p-500.jpg 500w, images/watercolor_reference_image.jpg 640w" alt="" class="imagestyleexample"></div>
+              <div id="w-node-_1e9b5add-8d94-b4e0-7080-d125422c0562-47edbc52" class="w-layout-cell">
+                <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09ad-47edbc52" class="w-layout-layout quickstackstyledropgallery wf-layout-layout">
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09ae-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a raccoon dancing.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a raccoon dancing.mp4" type="video/mp4"></video>
+                      <div data-w-id="2ba6bea0-fac9-7374-0592-f63ad6f1407f" class="text-caption-div">
+                        <div class="captiontextbox">A raccoon dancing<br></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09b5-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a cat drinking milk from a bowl.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a cat drinking milk from a bowl.mp4" type="video/mp4"></video>
+                      <div data-w-id="0d0ec956-6965-ba0b-435b-858a4674df50" class="text-caption-div">
+                        <div class="captiontextbox">A cat drinking milk from a bowl</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09bb-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/panda munching on bamboo.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/panda munching on bamboo.mp4" type="video/mp4"></video>
+                      <div data-w-id="10a64a58-fcea-f95e-b9bf-9e06df3c1714" class="text-caption-div">
+                        <div class="captiontextbox">A chubby panda munching on bamboo shoots</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09c0-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/horse galloping.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/horse galloping.mp4" type="video/mp4"></video>
+                      <div data-w-id="de3f462c-9335-b4b1-94e2-86788bee2697" class="text-caption-div">
+                        <div class="captiontextbox">A horse galloping across a field</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09c6-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a girl with a beanie dancing.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a girl with a beanie dancing.mp4" type="video/mp4"></video>
+                      <div data-w-id="812ac2fd-b127-394e-74ab-38764b3b44ec" class="text-caption-div">
+                        <div class="captiontextbox">A girl with a beanie dancing</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09cc-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/family of ducks in a pond.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/family of ducks in a pond.mp4" type="video/mp4"></video>
+                      <div data-w-id="0ec13443-d411-4d2f-57fa-c67d56028062" class="text-caption-div">
+                        <div class="captiontextbox">A family of ducks swimming in a pond</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09d1-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a dog walking.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/a watercolor painting of a dog walking.mp4" type="video/mp4"></video>
+                      <div data-w-id="2c6b2fc4-655d-4a45-3a66-a0a6f4f890e8" class="text-caption-div">
+                        <div class="captiontextbox">A dog walking</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="w-node-_0861d836-9ea7-661a-d1ee-fb2417da09d7-47edbc52" class="w-layout-cell cell">
+                    <div class="div-block-6">
+                      <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/styledrop/watercolor_painting/dolphin leaping.webm" type="video/webm"><source data-src="videos/styledrop/watercolor_painting/dolphin leaping.mp4" type="video/mp4"></video>
+                      <div data-w-id="9f29f160-c4de-d6c9-924f-bdb69c01d27c" class="text-caption-div">
+                        <div class="captiontextbox">A dolphin leaping out of the water<br></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="w-node-_1e9b5add-8d94-b4e0-7080-d125422c0598-47edbc52" class="w-layout-cell cell-10">
+                <p class="paragraph-3">Style reference image</p>
+              </div>
+              <div id="w-node-_1e9b5add-8d94-b4e0-7080-d125422c059b-47edbc52" class="w-layout-cell cell-11">
+                <p class="paragraph-4">&quot;Watercolor painting&quot;</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="left-arrow w-slider-arrow-left">
+          <div class="iconslider w-icon-slider-left"></div>
+        </div>
+        <div class="w-slider-arrow-right">
+          <div class="iconslider w-icon-slider-right"></div>
+        </div>
+        <div class="w-slider-nav w-slider-nav-invert w-round"></div>
+      </div>
+    </div>
+  </section>
+  <section class="sectionwhite">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <div id="w-node-_62bafe6a-ab20-520c-6977-1808abd5ef17-47edbc52" class="w-layout-layout quick-stack-3 wf-layout-layout">
+        <div id="w-node-_62bafe6a-ab20-520c-6977-1808abd5ef18-47edbc52" class="w-layout-cell cell-2">
+          <h1 class="heading-7">Introduction</h1>
+        </div>
+        <div id="w-node-_62bafe6a-ab20-520c-6977-1808abd5ef19-47edbc52" class="w-layout-cell">
+          <p class="paragraph-2">We introduce Lumiere -- a text-to-video diffusion model designed for synthesizing videos that portray realistic, diverse and coherent motion -- a pivotal challenge in video synthesis. To this end, we introduce a model architecture that generates the entire duration of the video in one pass, followed by a spatial-only super-resolution model. Our model is based on a space-time U-Net architecture that incorporates both spatial and (importantly) temporal down- and up-sampling, and leverages a pre-trained text-to-image diffusion model. As opposed to existing methods which synthesize distant keyframes followed by temporal super-resolution, our model learns to directly generate a full-frame-rate, low resolution video by processing it in multiple space-time scales. We demonstrate state-of-the-art text-to-video generation results, as well as a range of creative applications that are easily facilitated by our design, including image-to-video, video inpainting, and stylized generation.</p>
+          <div class="div-block-14"><img src="images/architecture.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/architecture-p-500.jpg 500w, images/architecture-p-800.jpg 800w, images/architecture-p-1080.jpg 1080w, images/architecture-p-1600.jpg 1600w, images/architecture-p-2000.jpg 2000w, images/architecture-p-2600.jpg 2600w, images/architecture-p-3200.jpg 3200w, images/architecture.jpg 5487w" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="section_video_stylization" class="sectiongrey">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <h1 class="heading-7">Video Stylization </h1>
+      <p class="paragraph-2">With Lumiere, off-the-shelf text-based image editing methods can be used for consistent video editing.</p>
+      <div id="w-node-f26a94f7-e03a-cbbd-d9b1-13541696b808-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+        <div id="w-node-_76a62839-62f6-19cf-9765-fc3ef75c9c20-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="text-block-5">Source Video</div>
+          <div class="div-block-6-head">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/woman_running_orig_blur.webm" type="video/webm"><source data-src="videos/stylization/woman_running_orig_blur.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_1d286420-50b5-34d6-3efe-dae5e5cfa797-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt">&quot;Made of wooden blocks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/wooden_woman.webm" type="video/webm"><source data-src="videos/stylization/wooden_woman.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-eee28ed0-8c83-9e9a-49cf-873b08403a54-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt">&quot;Origami folded paper art&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/origami_woman.webm" type="video/webm"><source data-src="videos/stylization/origami_woman.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_983d1ead-d7ac-f470-5595-3e301690c32e-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt">&quot;Made of colorful toy bricks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/lego_woman.webm" type="video/webm"><source data-src="videos/stylization/lego_woman.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-ffdc8ea5-cf4e-5318-f417-d6c1883403d2-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt">&quot;Made of flowers&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/woman_flowers.webm" type="video/webm"><source data-src="videos/stylization/woman_flowers.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_512e08e2-0c6e-60b0-b9a0-593e1632f5ce-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="text-block-5_hidden">Source Video</div>
+          <div class="div-block-6-head">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/dog_in_car_orig_crop.webm" type="video/webm"><source data-src="videos/stylization/dog_in_car_orig_crop.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_5eca2949-e5a0-7005-225e-77e391e73a8f-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of stacked wooden blocks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/wooden_dog.webm" type="video/webm"><source data-src="videos/stylization/wooden_dog.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-f25608a8-6a6e-15a7-c888-e2e949c0fffc-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Origami folded paper art&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/origami_dog.webm" type="video/webm"><source data-src="videos/stylization/origami_dog.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_28240f93-2b8a-72a8-a571-1dca97d7798c-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of colorful toy bricks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/lego_dog.webm" type="video/webm"><source data-src="videos/stylization/lego_dog.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-c7382ea3-72ca-ffd2-a917-4820422decd4-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of flowers&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/dog_flowers.webm" type="video/webm"><source data-src="videos/stylization/dog_flowers.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_1d795710-598b-6997-09a5-24700ca19f8a-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="text-block-5_hidden">Source Video</div>
+          <div class="div-block-6-head">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/car_driving_orig_blur.webm" type="video/webm"><source data-src="videos/stylization/car_driving_orig_blur.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-ffcdf020-7dec-51ae-8046-a49da57bf3a0-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of stacked wooden blocks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/wooden_car.webm" type="video/webm"><source data-src="videos/stylization/wooden_car.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_4bd9afaf-5ee1-a9fe-5e32-e2119e3a2732-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Origami folded paper art&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/origami-car.webm" type="video/webm"><source data-src="videos/stylization/origami-car.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-f0977375-8848-8456-a392-45ec0af3af41-47edbc52" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of colorful toy bricks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/lego_car.webm" type="video/webm"><source data-src="videos/stylization/lego_car.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_88a91e3b-1481-3d4b-64c0-c977f9a33ecf-47edbc52" class="w-layout-cell cellwithtext lazy">
+          <div class="textblockstyleprompt_hidden">&quot;Made of flowers&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/car_flowers.webm" type="video/webm"><source data-src="videos/stylization/car_flowers.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+
+        <div id="bear_src" class="w-layout-cell cellwithtext"> 
+          <div class="text-block-5_hidden">Source Video</div>
+          <div class="div-block-6-head">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/bear_src.webm" type="video/webm"><source data-src="videos/stylization/bear_src.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="bear_wooden" class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of stacked wooden blocks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/bear wooden.webm" type="video/webm"><source data-src="videos/stylization/bear wooden.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Origami folded paper art&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/bear origami.webm" type="video/webm"><source data-src="videos/stylization/bear origami.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of colorful toy bricks&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/bear toy.webm" type="video/webm"><source data-src="videos/stylization/bear toy.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div class="w-layout-cell cellwithtext">
+          <div class="textblockstyleprompt_hidden">&quot;Made of flowers&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/stylization/bear flowers.webm" type="video/webm"><source data-src="videos/stylization/bear flowers.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  <section id="section_magic_animator" class="sectionwhite">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <h1 class="heading-7">Cinemagraphs</h1>
+      <p class="paragraph-2">The Lumiere model is able to animate the content of an image within a specific user-provided region.</p>
+      <div id="w-node-_48768536-2ffc-7297-53f0-35801f68382a-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f68382b-47edbc52" class="w-layout-cell celltitle">
+          <div class="text-block-5">Input Image + Mask</div>
+        </div>
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f68382e-47edbc52" class="w-layout-cell celltitle">
+          <div class="text-block-5">Output Video</div>
+        </div>
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f683831-47edbc52" class="w-layout-cell celltitlewide">
+          <div class="text-block-5">Input Image + Mask</div>
+        </div>
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f683834-47edbc52" class="w-layout-cell celltitlewide">
+          <div class="text-block-5">Output Video</div>
+        </div>
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f68383a-47edbc52" class="w-layout-cell">
+          <div class="div-block-6"><img src="images/butterfly_with_mask.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/butterfly_with_mask-p-500.jpg 500w, images/butterfly_with_mask.jpg 551w" alt="" class="image imagemaingallery"></div>
+        </div>
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f68383d-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/cinemagraphs/butterfly.webm" type="video/webm"><source data-src="videos/cinemagraphs/butterfly.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f683840-47edbc52" class="w-layout-cell">
+          <div class="div-block-6"><img src="images/fire_with_mask.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/fire_with_mask-p-500.jpg 500w, images/fire_with_mask.jpg 551w" alt="" class="image imagemaingallery"></div>
+        </div>
+        <div id="w-node-_48768536-2ffc-7297-53f0-35801f683843-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/cinemagraphs/fire.webm" type="video/webm"><source data-src="videos/cinemagraphs/fire.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_57a71f36-c33e-d0c1-1a37-e9caea9525d4-47edbc52" class="w-layout-cell">
+          <div class="div-block-6"><img src="images/lake_with_mask.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/lake_with_mask-p-500.jpg 500w, images/lake_with_mask.jpg 551w" alt="" class="image imagemaingallery"></div>
+        </div>
+        <div id="w-node-d68cb2fb-cd35-e557-b121-f799a303ddf3-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/cinemagraphs/lake.webm" type="video/webm"><source data-src="videos/cinemagraphs/lake.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_2c07f203-ace9-3547-8aa7-7c6d693204ac-47edbc52" class="w-layout-cell">
+          <div class="div-block-6"><img src="images/train_with_mask.jpg" loading="lazy" sizes="(max-width: 479px) 96vw, (max-width: 767px) 97vw, (max-width: 1439px) 98vw, 1260px" srcset="images/train_with_mask-p-500.jpg 500w, images/train_with_mask.jpg 551w" alt="" class="image imagemaingallery"></div>
+        </div>
+        <div id="w-node-e16924a5-e436-535d-035c-2217e5969224-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/cinemagraphs/train.webm" type="video/webm"><source data-src="videos/cinemagraphs/train.mp4" type="video/mp4"></video>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="section_inpainting" class="sectiongrey">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <h1 class="heading-7">Video Inpainting</h1>
+      <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fd4-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fd5-47edbc52" class="w-layout-cell celltitle">
+          <div class="text-block-5">Source Masked Video</div>
+        </div>
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fd9-47edbc52" class="w-layout-cell celltitle">
+          <div class="text-block-5">Output Video</div>
+        </div>
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fdc-47edbc52" class="w-layout-cell celltitlewide">
+          <div class="text-block-5">Source Masked Video</div>
+        </div>
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fdf-47edbc52" class="w-layout-cell celltitlewide">
+          <div class="text-block-5">Output Video</div>
+        </div>
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fe2-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/masked_river.webm" type="video/webm"><source data-src="videos/inpainting/masked_river.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fe5-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/river.webm" type="video/webm"><source data-src="videos/inpainting/river.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4fe8-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/masked_air_balloon.webm" type="video/webm"><source data-src="videos/inpainting/masked_air_balloon.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_3f4320ee-e950-98f9-f142-c6b14cdf4feb-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/air_balloon.webm" type="video/webm"><source data-src="videos/inpainting/air_balloon.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_9644924d-64b2-cfa4-ed39-c20b1b4887f6-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/masked_pizza.webm" type="video/webm"><source data-src="videos/inpainting/masked_pizza.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-da183308-6d1a-723b-fb7b-6d4da567f89e-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/pizza.webm" type="video/webm"><source data-src="videos/inpainting/pizza.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_2048f659-3bb5-0f64-178c-1225453747a2-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/masked_rose.webm" type="video/webm"><source data-src="videos/inpainting/masked_rose.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_3c8b8668-a408-0124-f546-9f17699a724d-47edbc52" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/rose.webm" type="video/webm"><source data-src="videos/inpainting/rose.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+
+        <div id="w-node-_inp5" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/dog_masked.webm" type="video/webm"><source data-src="videos/inpainting/dog_masked.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_inp6" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/dog.webm" type="video/webm"><source data-src="videos/inpainting/dog.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_inp7" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/chocolate_masked.webm" type="video/webm"><source data-src="videos/inpainting/chocolate_masked.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-_inp8" class="w-layout-cell">
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/inpainting/chocolate.webm" type="video/webm"><source data-src="videos/inpainting/chocolate.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="section_video_editing" class="sectionwhite">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe90a-47edbc52" class="w-layout-layout quickstackgallery wf-layout-layout">
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe90b-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="text-block-5">Source Video</div>
+          <div class="div-block-6-head">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/woman_dress_src_blurred.webm" type="video/webm"><source data-src="videos/editing/woman_dress_src_blurred.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe910-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a gold strapless gown&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/a_woman_with_a_gold_strapless_gown_walking_in_a_field_1_blurred.webm" type="video/webm"><source data-src="videos/editing/a_woman_with_a_gold_strapless_gown_walking_in_a_field_1_blurred.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe915-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a striped strapless dress&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/a_woman_with_a_striped_strapless_dress_walking_in_a_field_1_blurred.webm" type="video/webm"><source data-src="videos/editing/a_woman_with_a_striped_strapless_dress_walking_in_a_field_1_blurred.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe91a-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a purple strapless dress&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/a_woman_wearing_a_purple_strapless_dress_1_blurred.webm" type="video/webm"><source data-src="videos/editing/a_woman_wearing_a_purple_strapless_dress_1_blurred.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe91f-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a black strapless gown&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/a_woman_with_a_strapless_gown_walking_in_a_field_2_blurred.webm" type="video/webm"><source data-src="videos/editing/a_woman_with_a_strapless_gown_walking_in_a_field_2_blurred.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe924-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="text-block-5">Source Video</div>
+          <div class="div-block-6-head">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/owl_src.webm" type="video/webm"><source data-src="videos/editing/owl_src.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe929-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a crown&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/an_owl_wearing_a_beautiful_sparkling_crown_with_diamonds_2.webm" type="video/webm"><source data-src="videos/editing/an_owl_wearing_a_beautiful_sparkling_crown_with_diamonds_2.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe92e-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing sunglasses&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/an_owl_wearing_cool_sunglasses_with_pink_frame_1.webm" type="video/webm"><source data-src="videos/editing/an_owl_wearing_cool_sunglasses_with_pink_frame_1.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe933-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a red scarf&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/an_owl_wearing_a_beautiful_colorful_scarf_1.webm" type="video/webm"><source data-src="videos/editing/an_owl_wearing_a_beautiful_colorful_scarf_1.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe938-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a purple tie&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/an_owl_wearing_a_purple_tie_1.webm" type="video/webm"><source data-src="videos/editing/an_owl_wearing_a_purple_tie_1.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe93d-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="text-block-5">Source Video</div>
+          <div class="div-block-6-head">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/chick_src.webm" type="video/webm"><source data-src="videos/editing/chick_src.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe942-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a bath robe&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/_a_chick_wearing_bath_robe_1.webm" type="video/webm"><source data-src="videos/editing/_a_chick_wearing_bath_robe_1.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe947-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing a party hat&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/a_chick_with_a_party_hat_mask_iter4.webm" type="video/webm"><source data-src="videos/editing/a_chick_with_a_party_hat_mask_iter4.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe94c-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;Standing on a stool&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/a_chick_standing_on_a_stool_mask_iter1.webm" type="video/webm"><source data-src="videos/editing/a_chick_standing_on_a_stool_mask_iter1.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div id="w-node-b46c8f33-edd5-b3c4-fb6b-8a7ec88fe951-47edbc52" class="w-layout-cell cellwithtextedit">
+          <div class="textblockstyleprompt">&quot;wearing rain boots&quot;</div>
+          <div class="div-block-6">
+            <video autoplay="" loop="" muted="" playsinline="" class="image imagemaingallery lazy"><source data-src="videos/editing/_a_chick_wearing_rain_boots_1.webm" type="video/webm"><source data-src="videos/editing/_a_chick_wearing_rain_boots_1.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sectiongrey">
+    <div class="w-layout-blockcontainer containterbody w-container">
+      <h1 class="heading-7">Authors</h1>
+      <div class="authors-grid">
+        <a id="w-node-_45030410-aad0-7f37-f19b-0ee784ab7da1-47edbc52" href="https://omerbt.github.io/" class="w-inline-block">
+          <div id="w-node-b7f11cc4-2b10-7acb-ad96-142326377386-47edbc52" class="text_block_authors">Omer Bar-Tal<sup>*,1,2</sup></div>
+        </a>
+        <a id="w-node-e6e85b35-355d-cfa9-d5f4-7f8459252c2b-47edbc52" href="https://hila-chefer.github.io/" class="w-inline-block">
+          <div id="w-node-a825158e-7300-92ac-b537-e820cca58f77-47edbc52" class="text_block_authors">Hila Chefer<sup>*,1,3</sup></div>
+        </a>
+        <a id="w-node-fd72a420-5207-7919-9fe6-68f9a807ba72-47edbc52" href="https://scholar.google.com/citations?user=lbo_R54AAAAJ&amp;hl=en" class="w-inline-block">
+          <div id="w-node-bd81ff73-cfa0-5f47-45be-c6ce991a6ceb-47edbc52" class="text_block_authors">Omer Tov<sup>*,1</sup></div>
+        </a>
+        <a id="w-node-_868f9c1f-6e3b-67f2-1715-01c6ba029700-47edbc52" href="https://scholar.google.com/citations?user=LQvi5XAAAAAJ&amp;hl=en" class="w-inline-block">
+          <div id="w-node-_8661c80c-e413-eafa-b3af-cf1c9d231a6f-47edbc52" class="text_block_authors">Charles Herrmann<sup>†,1</sup></div>
+        </a>
+        <a id="w-node-cc08a944-dd44-2f1f-f9df-d879eefd7fa7-47edbc52" href="https://scholar.google.com/citations?user=-KSDNZQAAAAJ&amp;hl=en" class="w-inline-block">
+          <div id="w-node-_5b45d453-3fa9-e589-bcd9-57bb4066c413-47edbc52" class="text_block_authors">Roni Paiss<sup>†,1</sup></div>
+        </a>
+      </div>
+      <div class="authors-grid">
+        <a id="w-node-_8178aa67-71e7-1e62-d997-18d8cf743953-47edbc52" href="https://scholar.google.com/citations?hl=en&amp;user=I2qheksAAAAJ" class="w-inline-block">
+          <div id="w-node-_1dce3720-0d73-ef01-6e71-45bd78c97c3d-47edbc52" class="text_block_authors">Shiran Zada<sup>†,1</sup></div>
+        </a>
+        <a id="w-node-_9102f738-b3d3-5b48-a8a3-5e7c59eda7ba-47edbc52" href="https://scholar.google.com/citations?user=n4dxd1YAAAAJ&amp;hl=en" class="w-inline-block">
+          <div id="w-node-_1dce3720-0d73-ef01-6e71-45bd78c97c3b-47edbc52" class="text_block_authors">Ariel Ephrat<sup>†,1</sup></div>
+        </a>
+        <a id="w-node-_6d6e889e-9059-8771-7a0c-e193d3b5190f-47edbc52" href="https://scholar.google.com/citations?hl=en&amp;user=z4dNJdkAAAAJ" class="w-inline-block">
+          <div id="w-node-_1dce3720-0d73-ef01-6e71-45bd78c97c3f-47edbc52" class="text_block_authors">Junhwa Hur<sup>†,1</sup></div>
+        </a>
+        <a id="w-node-_85b44fe2-1dc8-91e5-93ab-80ff23a2aadb-47edbc52" href="https://scholar.google.com/citations?hl=en&amp;user=k1eaag4AAAAJ" class="w-inline-block">
+          <div id="w-node-_1dce3720-0d73-ef01-6e71-45bd78c97c41-47edbc52" class="text_block_authors">Yuanzhen Li<sup>1</sup></div>
+        </a>
+        <a id="w-node-c525324b-af26-98b8-0d77-5ee3812a4ecd-47edbc52" href="https://tomer.net.technion.ac.il/" class="w-inline-block">
+          <div id="w-node-_7e24ae3d-4f4c-5762-4bd3-2c632e1973ff-47edbc52" class="text_block_authors">Tomer Michaeli<sup>1,4</sup></div>
+        </a>
+      </div>
+      <div class="authors-grid-tail">
+        <a id="w-node-a7fc44e5-94a8-4e7e-5c57-3262f56220e1-47edbc52" href="https://scholar.google.com/citations?user=0B8uuBkAAAAJ&amp;hl=en" class="w-inline-block">
+          <div id="w-node-_7e24ae3d-4f4c-5762-4bd3-2c632e197401-47edbc52" class="text_block_authors">Oliver Wang<sup>1</sup></div>
+        </a>
+        <a id="w-node-fe459d00-4a42-bb73-013e-30b847286c44-47edbc52" href="https://scholar.google.com/citations?hl=en&amp;user=t4rgICIAAAAJ" class="w-inline-block">
+          <div id="w-node-_1dce3720-0d73-ef01-6e71-45bd78c97c43-47edbc52" class="text_block_authors">Deqing Sun<sup>1</sup></div>
+        </a>
+        <a id="w-node-_5c3d7e0b-d69b-28b3-ac83-bcc45db472a1-47edbc52" href="https://www.weizmann.ac.il/math/dekel/home" class="w-inline-block">
+          <div id="w-node-_7e24ae3d-4f4c-5762-4bd3-2c632e197403-47edbc52" class="text_block_authors">Tali Dekel<sup>1,2</sup></div>
+        </a>
+        <a id="w-node-ac6339ba-b78b-777c-8316-7ead9cb72770-47edbc52" href="https://inbar-mosseri.github.io/" class="w-inline-block">
+          <div id="w-node-_7e24ae3d-4f4c-5762-4bd3-2c632e197405-47edbc52" class="text_block_authors">Inbar Mosseri<sup>†,1</sup></div>
+        </a>
+      </div>
+      <div class="authors-grid-tail" style="margin-top: 26px;">
+        <div class="text_block_authors w-inline-block"><sup>1</sup>Google Research</div>
+        <div class="text_block_authors w-inline-block"><sup>2</sup>Weizmann Institute</div>
+        <div class="text_block_authors w-inline-block"><sup>3</sup>Tel-Aviv University</div>
+        <div class="text_block_authors w-inline-block"><sup>4</sup>Technion</div>
+      </div>
+      <p class="equal_contrib">(*): Equal first co-author, (†) Core technical contribution<br>Work was done while O. Bar-Tal, H. Chefer were interns at Google.</p>
+
+      <h1 class="heading-7">Acknowledgements</h1>
+      <p class="paragraph-8"></p>
+      <p class="paragraph-2"><em class="paragraph-2">We would like to thank Miki Rubinstein, Amit Raj, Ronny Votel, Orly Liba, Bryan Seybold, David Ross, Guanghui Liu, Dan Goldman, Hartwig Adam, Xuhui Jia, Xiuye Gu, Rachel Hornung, Oran Lang and Jess Gallegos for their collaboration, helpful discussions, feedback and support.<br>
+        We thank owners of images and videos used in our experiments (</em><a href="https://github.com/lumiere-video/lumiere-video.github.io/blob/main/assets/media_attributions.md"><strong><em class="paragraph-2">links</em></strong></a><em class="paragraph-2"> for attribution) for sharing their valuable assets.</em>
+      </p>
+      <p class="paragraph-7"><em class="paragraph-2"><br>* References:<br></em>
+        <a href="https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"><em class="paragraph-2">Mona Lisa</em></a><em class="paragraph-2">, public domain.<br></em>
+        <a target="_blank" href="https://commons.wikimedia.org/wiki/File:Pillars_of_creation_2014_HST_WFC3-UVIS_full-res.jpg"><em class="paragraph-2">Pillars of Creation</em></a><em class="paragraph-2">, public domain.<br></em>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/File:Raising_the_Flag_on_Iwo_Jima,_larger_-_edit1.jpg"><em class="paragraph-2">Raising the Flag on Iwo Jima</em></a><em class="paragraph-2">, public domain.<br></em>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/File:Raising_the_Flag_on_Iwo_Jima,_larger_-_edit1.jpg"><em class="paragraph-2">Mask of Tutankhamun</em></a><em class="paragraph-2">, </em>
+        <a href="https://creativecommons.org/licenses/by-sa/3.0"><em class="paragraph-2">CC BY-SA 3.0</em></a><em class="paragraph-2">.<br></em>
+        <a href="https://commons.wikimedia.org/wiki/File:1665_Girl_with_a_Pearl_Earring.jpg"><em class="paragraph-2">Girl with a Pearl Earring</em></a><em class="paragraph-2">, public domain.<br></em>
+        <a href="https://commons.wikimedia.org/wiki/Isaac_Newton#/media/File:Portrait_of_Sir_Isaac_Newton,_1689.jpg"><em class="paragraph-2">Isaac Newton</em></a><em class="paragraph-2">, public domain.<br></em>
+        <a href="https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"><em class="paragraph-2">Starry Night</em></a><em class="paragraph-2">, public domain.<br></em>
+        <a href="https://commons.wikimedia.org/wiki/File:The_Great_Wave_of_Kanagava.jpg"><em class="paragraph-2">The Great Wave of Kanagava</em></a><em class="paragraph-2">, public domain.<br>‍<br></em>
+      </p>
+    </div>
+  </section>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=658acfc5822f338b47edbc4e" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+</body>
+</html>
