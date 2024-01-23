@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html data-wf-page="658acfc5822f338b47edbc52" data-wf-site="658acfc5822f338b47edbc4e">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0BT8CWE2L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-M0BT8CWE2L');
+  </script>
   <meta charset="utf-8">
   <title>Lumiere</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
   
   <meta name="description" content="Space-Time Text-to-Video diffusion model by Google Research." />
-  <meta property="og:type" content="website" />
+  <!-- <meta property="og:type" content="website" /> -->
   <meta property="og:site_name" content="Lumiere - Google Research" />
   <meta property="og:url" content="https://lumiere-video.github.io" />
   <meta property="og:title" content="Lumiere - Google Research" />
   <meta property="og:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
   <meta property="og:image" content="https://raw.githubusercontent.com/lumiere-video/lumiere-video.github.io/main/images/lumiere_frame_poster.jpg" />
-  <meta property="twitter:card" content="summary" />
-  <meta property="twitter:site" content="GoogleAI" />
-  <meta property="twitter:title" content="Lumiere - Google Research" />
-  <meta property="twitter:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
-  <meta property="twitter:image" content="https://raw.githubusercontent.com/lumiere-video/lumiere-video.github.io/main/images/lumiere_frame_poster.jpg" />  
+
+  <meta property="og:type" content="video">
+  <meta property="og:video" content="https://www.youtube.com/embed/wxLr02Dz2Sc">
+  <meta property="og:video:height" content="720">
+  <meta property="og:video:width" content="1280">
+
+
+
+  <meta name="twitter:card" content="player" />
+  <meta name="twitter:site" content="GoogleAI" />
+  <meta name="twitter:title" content="Lumiere - Google Research" />
+  <meta name="twitter:description" content="Space-Time Text-to-Video diffusion model by Google Research." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/lumiere-video/lumiere-video.github.io/main/images/lumiere_frame_poster.jpg" />  
+
+  <meta name="twitter:player" content="https://www.youtube.com/embed/wxLr02Dz2Sc">
+  <meta name="twitter:player:width" content="1280">
+  <meta name="twitter:player:height" content="720">
 
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
   <link href="css/webflow.css" rel="stylesheet" type="text/css">
@@ -75,7 +96,7 @@
       </div>
     </div>
   </div>
-  <section class="hero-heading-left">
+  <section class="hero-heading-left" style="padding-top: 50px;">
     <div class="container-2">
       <div class="hero-wrapper">
         <div class="hero-split">
@@ -87,11 +108,16 @@
       </div>
     </div>
   </section>
-  <section class="sectionwhite" style="background: black; padding-top: 0px;">
-    <div class="w-layout-blockcontainer containterbody w-container">
-      <div style="padding-top:56.17021276595745%;" class="w-embed-youtubevideo youtube">
-        <iframe src="https://www.youtube.com/embed/wxLr02Dz2Sc?rel=0&amp;controls=1&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="position:absolute; top:0%; left:0%; height:100%; width:100%; pointer-events:auto" allow="autoplay; encrypted-media" donotallowfullscreen title="Lumiere"></iframe>
+  <section class="sectionwhite" style="background: black; padding-top: 0px; padding-bottom: 60px;">
+    <div class="w-layout-blockcontainer containterbody w-container" style="display: flex; justify-content: center;">
+      <div class="video-wrap" style="justify-content: center;">
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/wxLr02Dz2Sc?rel=0&amp;controls=1&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="pointer-events:auto" allow="autoplay; encrypted-media" donotallowfullscreen title="Lumiere"></iframe>
+        </div>
       </div>
+      <!-- <div style="padding-top:56.17021276595745%;" class="w-embed-youtubevideo youtube">
+        <iframe src="https://www.youtube.com/embed/wxLr02Dz2Sc?rel=0&amp;controls=1&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="position:absolute; top:0%; left:0%; height:100%; width:100%; pointer-events:auto" allow="autoplay; encrypted-media" donotallowfullscreen title="Lumiere"></iframe>
+      </div> -->
     </div>
   </section>
   <section id="section_text_to_video" class="sectiongrey">
