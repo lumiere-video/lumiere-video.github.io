@@ -43,6 +43,17 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
     var lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
+    var sources = document.querySelectorAll('source');
+    var isIphone = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isIphone) {
+      // Filter out WebM sources for iPhones
+      sources.forEach(function(source) {
+          if (source.type === 'video/webm') {
+              source.remove();
+          }
+      });
+    };
 
     if ("IntersectionObserver" in window) {
       var lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
